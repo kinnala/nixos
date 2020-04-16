@@ -4,23 +4,23 @@
 * Introduction
 
 /Declarative configuration/ refers to the practice of defining the preferred
-state of the system instead of individual steps for achieving it.  Such a
-practice requires advanced tools that automagically compare the current state of
-the system with its declarative configuration for determining the next action.
+state of a system instead of individual steps for achieving it.  Such practice
+requires advanced tools that automagically compare the current state of the
+system with its declarative description for determining the next action.
 
 In the context of cloud software deployment, one example of a declaratively
 configured system is Kubernetes which has changed how applications are deployed
 to the cloud.  The benefits of such an approach are clear: it is safer to deploy
 updates when reverting is as simple as rolling back the configuration.
 
-Today, I have strong opinions on how my computing environment should look
-like and a clear vision of its preferred state.  Hence, I realized that
-I should improve my tools accordingly.
+Today, I have strong opinions on how my computing environment should look like
+and clear vision of its preferred state.  Hence, I realized that improving
+my tools could be beneficial.
 
-* Enter NixOS
+* Define state using configuration.nix
 
-NixOS is a GNU/Linux system with an unique approach to configuration and
-package management.  The preferred state of the operating system is defined
+NixOS is a GNU/Linux system with an unique approach to configuration and package
+management.  The preferred state of the operating system installation is defined
 in a single file:
 
 #+begin_src nix :mkdirp yes :tangle /etc/nixos/configuration.nix
@@ -56,6 +56,18 @@ in a single file:
 }
 #+end_src
 
+The above file defines the software packages I use in my computing environment.
+It also pins down the versions of Emacs packages via a MELPA overlay.  I could
+go further and fix also the version of nixpkgs (NixOS package repository) but
+currently it is not done.
+
+Thus, transferring the computing environment to a new computer should be as
+simple as installing NixOS, copying this file over and running
+
+#+begin_src sh :results output silent
+nixos-rebuild switch
+#+end_src
+
 * Steps
 
 Contents of this file get tangled to /etc/nixos via
@@ -63,14 +75,6 @@ Contents of this file get tangled to /etc/nixos via
 #+begin_src elisp :results output silent
 (org-babel-tangle)
 #+end_src
-
-The configuration is rebuilt using
-
-#+begin_src sh :results output silent
-nixos-rebuild switch
-#+end_src
-
-** configuration.nix
 
 
 
