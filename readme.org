@@ -1,18 +1,27 @@
-* NixOS configuration
+#+TITLE: Declarative personal computing with NixOS
+#+AUTHOR: Tom Gustafsson
 
-Contents of this file get tangled to /etc/nixos via
+* Introduction
 
-#+begin_src elisp :results output silent
-(org-babel-tangle)
-#+end_src
+/Declarative configuration/ refers to the practice of defining the preferred
+state of the system instead of individual steps for achieving it.  Such a
+practice requires advanced tools that automagically compare the current state of
+the system with its declarative configuration for determining the next action.
 
-The configuration is rebuilt using
+In the context of cloud software deployment, one example of a declaratively
+configured system is Kubernetes which has changed how applications are deployed
+to the cloud.  The benefits of such an approach are clear: it is safer to deploy
+updates when reverting is as simple as rolling back the configuration.
 
-#+begin_src sh :results output silent
-nixos-rebuild switch
-#+end_src
+Today, I have strong opinions on how my computing environment should look
+like and a clear vision of its preferred state.  Hence, I realized that
+I should improve my tools accordingly.
 
-** configuration.nix
+* Enter NixOS
+
+NixOS is a GNU/Linux system with an unique approach to configuration and
+package management.  The preferred state of the operating system is defined
+in a single file:
 
 #+begin_src nix :mkdirp yes :tangle /etc/nixos/configuration.nix
 { config, pkgs, ... }: {
@@ -28,6 +37,7 @@ nixos-rebuild switch
   ];
 
   environment.systemPackages = with pkgs; [
+    bash
     pass
     gnupg
     ripgrep
@@ -45,6 +55,24 @@ nixos-rebuild switch
 
 }
 #+end_src
+
+* Steps
+
+Contents of this file get tangled to /etc/nixos via
+
+#+begin_src elisp :results output silent
+(org-babel-tangle)
+#+end_src
+
+The configuration is rebuilt using
+
+#+begin_src sh :results output silent
+nixos-rebuild switch
+#+end_src
+
+** configuration.nix
+
+
 
 ** overlays/emacs.nix
 
