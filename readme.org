@@ -37,6 +37,9 @@ file:
     (import /etc/nixos/overlays/emacs.nix)
   ];
 
+  virtualisation.docker.enable = true;
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
     bash
     pass
@@ -50,9 +53,25 @@ file:
     vim
     tmux
     emacsGit
+    dropbox-cli
   ];
 
-  virtualisation.docker.enable = true;
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.layout = "fi";
+  services.xserver.libinput.enable = true;
+  services.xserver.libinput.tapping = false;
+
+  hardware.pulseaudio.enable = true;
+  networking.networkmanager.enable = true;
+
+  users.users.tom = {
+    isNormalUser = true;
+    home = "/home/tom";
+    description = "The Supervisor";
+    extraGroups = [ "wheel" "networkmanager" ];
+  };
 
 }
 #+end_src
