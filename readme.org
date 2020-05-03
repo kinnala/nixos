@@ -1,4 +1,4 @@
-#+TITLE: Declarative personal computing
+#+TITLE: Emacs and declarative personal computing
 #+AUTHOR: Tom Gustafsson
 
 * Introduction
@@ -15,21 +15,17 @@ to deploy updates when reverting is as simple as rolling back the configuration.
 
 Today, I have strong opinions on how my computing environment should look like
 and a clear vision of its preferred state.  Hence, it is possible for me to up
-my game and apply declarative configuration to my operating system.
+my game and apply declarative configuration to my operating system and Emacs.
 
 * Define state using configuration.nix
 
 [[https://nixos.org/][NixOS]] is a GNU/Linux system with an unique approach to configuration and package
 management.  The preferred state of the operating system is defined in a single
-file:
+file, =/etc/nixos/configuration.nix=:
 
 #+begin_src nix :mkdirp yes :tangle /etc/nixos/configuration.nix
-{ config, pkgs, ... }:
-
-{
-  imports = [
-    ./hardware-configuration.nix
-  ];
+{ config, pkgs, ... }: {
+  imports = [ ./hardware-configuration.nix ];
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
@@ -38,19 +34,18 @@ file:
     }))
     (import /etc/nixos/overlays/emacs.nix)
   ];
+  nixpkgs.config.allowUnfree = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "tunkki";
   networking.networkmanager.enable = true;
-
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
   networking.interfaces.wlp2s0.useDHCP = true;
 
   i18n.defaultLocale = "fi_FI.UTF-8";
-
   time.timeZone = "Europe/Helsinki";
 
   sound.enable = true;
@@ -63,15 +58,12 @@ file:
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
   
-  programs.gnupg.agent.enable = true;
-
   users.users.tom = {
     isNormalUser = true;
     home = "/home/tom";
     extraGroups = [ "wheel" "networkmanager" "docker" ];
   };
 
-  nixpkgs.config.allowUnfree = true;
   virtualisation.docker.enable = true;
 
   system.stateVersion = "20.03";
@@ -94,32 +86,46 @@ file:
     pass
     pinentry
   ];
+  programs.gnupg.agent.enable = true;
 }
 #+end_src
 
-The above file defines my computing environment including the software packages.
-It also pins down the versions of Emacs packages via a MELPA overlay.  I could
-go further and fix also the version of nixpkgs (NixOS package repository) if
-needed.
-
-Thus, transferring the computing environment to a new laptop is as simple as
-installing NixOS, copying over the above file and running
+This file defines the system state including the software packages.  Adding a
+new package is as simple as modifying =configuration.nix= and running
 
 #+begin_src sh :results output silent
 nixos-rebuild switch
 #+end_src
 
-* Steps
+The same applies to a full system reinstall.  In a fresh NixOS installation, I
+can introduce Emacs into a temporary shell environment and /tangle/ this
+document via
 
-Contents of this file get tangled to /etc/nixos via
+#+begin_src sh :results output silent
+nix-shell -p emacs
+emacs --file readme.org --eval '(progn (org-babel-tangle) (kill-emacs))'
+#+end_src
 
-#+begin_src elisp :results output silent
+which, among other things, writes =configuration.nix= into the path expected by
+NixOS.
+
+* Emacs, org-mode and tangling
+
+This document is actually an example of /literate programming/ using Emacs
+/org-mode/.  Using org-mode, source code for different programming languages can
+be intertwined in a single document and exported to the correct paths by
+evaluating the following Emacs Lisp expression:
+
+#+begin_src emacs-lisp
 (org-babel-tangle)
 #+end_src
 
+Executing the function =org-babel-tangle= will traverse through the active
+document, extract each source code block and export them to the paths defined in
+the source code block headers (that are, unfortunately, not visible in the HTML
+version rendered by Github: see the raw file for details).
 
-
-** overlays/emacs.nix
+For example, the following snippet gets exported to =/etc/nixos/overlays/emacs.nix=
 
 #+begin_src nix :mkdirp yes :tangle /etc/nixos/overlays/emacs.nix
 self: super: {
