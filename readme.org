@@ -6,21 +6,20 @@
 /Declarative configuration/ refers to the practice of defining the preferred
 state of a system instead of individual steps for achieving it.  Such practice
 requires advanced tools that automagically compare the current state of the
-system with its declarative description to determine the next action.
+system with its description to determine the next action.
 
 In the context of cloud software deployment, one example of a declaratively
-configured system is Kubernetes which has changed how applications are deployed
-to the cloud.  The benefits of such an approach are clear: it is safer to deploy
-updates when reverting is as simple as rolling back the configuration.
+configured system is [[https://kubernetes.io/][Kubernetes]] which has revolutionized how applications are
+deployed to the cloud.  The benefits of such an approach are clear: it is safer
+to deploy updates when reverting is as simple as rolling back the configuration.
 
 Today, I have strong opinions on how my computing environment should look like
-and a clear vision of its preferred state.  Hence, it is possible for me to
-incorporate better tools and apply the principles of declarative configuration
-to my operating system.
+and a clear vision of its preferred state.  Hence, it is possible for me to up
+my game and apply declarative configuration to my operating system.
 
 * Define state using configuration.nix
 
-NixOS is a GNU/Linux system with an unique approach to configuration and package
+[[https://nixos.org/][NixOS]] is a GNU/Linux system with an unique approach to configuration and package
 management.  The preferred state of the operating system is defined in a single
 file:
 
@@ -54,25 +53,6 @@ file:
 
   time.timeZone = "Europe/Helsinki";
 
-  environment.systemPackages = with pkgs; [
-    wget
-    vim
-    bash
-    gnupg
-    ripgrep
-    htop
-    gnumake
-    xclip
-    git
-    tmux
-    dropbox-cli
-    google-chrome
-    emacsGit
-    tree
-    pass
-    pinentry
-  ];
-
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
@@ -96,12 +76,31 @@ file:
 
   system.stateVersion = "20.03";
 
+  environment.systemPackages = with pkgs; [
+    wget
+    vim
+    bash
+    gnupg
+    ripgrep
+    htop
+    gnumake
+    xclip
+    git
+    tmux
+    dropbox-cli
+    google-chrome
+    emacsGit
+    tree
+    pass
+    pinentry
+  ];
 }
 #+end_src
 
-The above file defines the software packages in my computing environment.  It
-also pins down the versions of Emacs packages via a MELPA overlay.  I could go
-further and fix also the version of nixpkgs (NixOS package repository) if needed.
+The above file defines my computing environment including the software packages.
+It also pins down the versions of Emacs packages via a MELPA overlay.  I could
+go further and fix also the version of nixpkgs (NixOS package repository) if
+needed.
 
 Thus, transferring the computing environment to a new laptop is as simple as
 installing NixOS, copying over the above file and running
