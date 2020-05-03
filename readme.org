@@ -25,9 +25,12 @@ management.  The preferred state of the operating system is defined in a single
 file:
 
 #+begin_src nix :mkdirp yes :tangle /etc/nixos/configuration.nix
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
 
-  imports = [ <nixpkgs/nixos/modules/installer/virtualbox-demo.nix> ];
+{
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
@@ -37,41 +40,61 @@ file:
     (import /etc/nixos/overlays/emacs.nix)
   ];
 
-  virtualisation.docker.enable = true;
-  nixpkgs.config.allowUnfree = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  networking.hostName = "tunkki";
+  networking.networkmanager.enable = true;
+
+  networking.useDHCP = false;
+  networking.interfaces.enp0s31f6.useDHCP = true;
+  networking.interfaces.wlp2s0.useDHCP = true;
+
+  i18n.defaultLocale = "fi_FI.UTF-8";
+
+  time.timeZone = "Europe/Helsinki";
 
   environment.systemPackages = with pkgs; [
+    wget
+    vim
     bash
-    pass
     gnupg
     ripgrep
     htop
     gnumake
     xclip
-    graphviz
     git
-    vim
     tmux
-    emacsGit
     dropbox-cli
+    google-chrome
+    emacsGit
+    tree
+    pass
+    pinentry
   ];
 
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
   services.xserver.layout = "fi";
   services.xserver.libinput.enable = true;
   services.xserver.libinput.tapping = false;
-
-  hardware.pulseaudio.enable = true;
-  networking.networkmanager.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.desktopManager.plasma5.enable = true;
+  
+  programs.gnupg.agent.enable = true;
 
   users.users.tom = {
     isNormalUser = true;
     home = "/home/tom";
-    description = "The Supervisor";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" ];
   };
+
+  nixpkgs.config.allowUnfree = true;
+  virtualisation.docker.enable = true;
+
+  system.stateVersion = "20.03";
 
 }
 #+end_src
@@ -644,9 +667,9 @@ region, down by N lines, or 1 line if N is nil."
 (windmove-default-keybindings)
 
 ;; fonts
-(set-face-attribute 'mode-line-inactive nil :font "Ubuntu Mono-12")
-(set-face-attribute 'default nil :font "Ubuntu Mono-16")
-(set-face-attribute 'mode-line nil :font "Ubuntu Mono-12")
+(set-face-attribute 'mode-line-inactive nil :font "Hack-12")
+(set-face-attribute 'default nil :font "Hack-14")
+(set-face-attribute 'mode-line nil :font "Hack-12")
 
 ;; disable tool and menu bars
 (tool-bar-mode -1)
