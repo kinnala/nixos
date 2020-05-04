@@ -85,6 +85,8 @@ file, =/etc/nixos/configuration.nix=:
     tree
     pass
     pinentry
+    docker-compose
+    okular
   ];
   programs.gnupg.agent.enable = true;
 }
