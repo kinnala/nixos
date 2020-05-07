@@ -61,10 +61,11 @@ file, =/etc/nixos/configuration.nix=:
   users.users.tom = {
     isNormalUser = true;
     home = "/home/tom";
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "docker" "vboxusers" ];
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.virtualbox.host.enable = true;
 
   system.stateVersion = "20.03";
 
