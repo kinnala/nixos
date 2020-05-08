@@ -88,6 +88,7 @@ file, =/etc/nixos/configuration.nix=:
     pinentry
     docker-compose
     okular
+    gwenview
   ];
   programs.gnupg.agent.enable = true;
 }
