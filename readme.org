@@ -89,6 +89,8 @@ file, =/etc/nixos/configuration.nix=:
     docker-compose
     okular
     gwenview
+    unzip
+    zip
   ];
   programs.gnupg.agent.enable = true;
 }
