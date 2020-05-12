@@ -87,8 +87,6 @@ file, =/etc/nixos/configuration.nix=:
     pass
     pinentry
     docker-compose
-    okular
-    gwenview
     unzip
     zip
   ];
