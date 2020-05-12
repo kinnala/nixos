@@ -55,8 +55,8 @@ file, =/etc/nixos/configuration.nix=:
   services.xserver.layout = "fi";
   services.xserver.libinput.enable = true;
   services.xserver.libinput.tapping = false;
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome3.enable = true;
   
   users.users.tom = {
     isNormalUser = true;
@@ -662,9 +662,9 @@ region, down by N lines, or 1 line if N is nil."
 (windmove-default-keybindings)
 
 ;; fonts
-(set-face-attribute 'mode-line-inactive nil :font "Hack-12")
-(set-face-attribute 'default nil :font "Hack-14")
-(set-face-attribute 'mode-line nil :font "Hack-12")
+(set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-12")
+(set-face-attribute 'default nil :font "Source Code Pro-14")
+(set-face-attribute 'mode-line nil :font "Source Code Pro-12")
 
 ;; disable tool and menu bars
 (tool-bar-mode -1)
