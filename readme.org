@@ -43,7 +43,7 @@ file, =/etc/nixos/configuration.nix=:
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp2s0.useDHCP = true;
+  networking.interfaces.wlp0s20f3.useDHCP = true;
 
   i18n.defaultLocale = "fi_FI.UTF-8";
   time.timeZone = "Europe/Helsinki";
@@ -164,12 +164,10 @@ The Emacs configuration comprises the rest of the snippets.
   :init
   (add-hook 'org-mode-hook (lambda ()
                              (fset 'tex-font-lock-suscript 'ignore)
-                             (require 'ob-jupyter)
                              (org-babel-do-load-languages
                               'org-babel-load-languages
                               '((python . t)
-                                (shell . t)
-                                (jupyter . t)))))
+                                (shell . t)))))
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
   (add-hook 'org-agenda-finalize-hook
             (lambda ()
@@ -213,8 +211,7 @@ The Emacs configuration comprises the rest of the snippets.
         org-adapt-indentation nil
         org-refile-use-outline-path 'file
         org-structure-template-alist '(("l" . "latex latex")
-                                       ("s" . "src")
-                                       ("p" . "src jupyter-python :session py"))
+                                       ("s" . "src"))
         org-outline-path-complete-in-steps nil
         org-duration-format '(("d" . nil) ("h" . t) (special . 2))
         org-format-latex-options '(:foreground default
@@ -407,19 +404,6 @@ The Emacs configuration comprises the rest of the snippets.
          ("\\.markdown\\'" . markdown-mode)))
 
 (use-package nix-mode)
-#+end_src
-
-*** jupyter
-
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
-(use-package jupyter
-  :init
-  (defun activate ()
-    "Reload jupyter kernelspecs after activation."
-    (interactive)
-    (progn
-      (venv-workon)
-      (org-babel-jupyter-aliases-from-kernelspecs))))
 #+end_src
 
 *** theme
