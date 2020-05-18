@@ -89,6 +89,7 @@ file, =/etc/nixos/configuration.nix=:
     docker-compose
     unzip
     zip
+    jq
   ];
   programs.gnupg.agent.enable = true;
 }
