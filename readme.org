@@ -661,9 +661,9 @@ region, down by N lines, or 1 line if N is nil."
 (windmove-default-keybindings)
 
 ;; fonts
-(set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-12")
-(set-face-attribute 'default nil :font "Source Code Pro-13")
-(set-face-attribute 'mode-line nil :font "Source Code Pro-12")
+(set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-9")
+(set-face-attribute 'default nil :font "Source Code Pro-9")
+(set-face-attribute 'mode-line nil :font "Source Code Pro-9")
 
 ;; disable tool and menu bars
 (tool-bar-mode -1)
