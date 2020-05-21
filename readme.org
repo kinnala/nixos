@@ -122,7 +122,7 @@ be intertwined in a single document and exported to the correct paths by
 evaluating the following Emacs Lisp expression:
 
 #+begin_src emacs-lisp
-(org-babel-tangle)
+(org-babel-tangle)  ;; tangle an org-mode document
 #+end_src
 
 Executing the function =org-babel-tangle= will traverse through the active
@@ -141,9 +141,19 @@ self: super: {
 }
 #+end_src
 
+It actually uses the function =emacsWithPackagesFromUsePackage= to parse my
+Emacs configuration and determine which addon packages should be automatically
+installed from MELPA.
+
 ** config/emacs/init.el
 
-The Emacs configuration comprises the rest of the snippets.
+The rest of the snippets are combined into the file
+=/etc/nixos/config/emacs/init.el=. This file I have symlinked to
+=~/.config/emacs/init.el= so that Emacs running under non-root user will find
+it.
+
+In the first snippet I simply initialize =use-package= which is used to
+configure the rest of the packages.
 
 #+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
 (require 'package)
