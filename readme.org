@@ -89,7 +89,7 @@ file, =/etc/nixos/configuration.nix=:
     docker-compose
     unzip
     zip
-    jq
+    vlc
   ];
   programs.gnupg.agent.enable = true;
 }
@@ -215,6 +215,7 @@ configure the rest of the packages.
                              ("~/Dropbox/Notes/gtd/work.org" . (:maxlevel . 1)))
         org-log-done 'time
         org-tags-column 0
+        org-agenda-tags-column 0
         org-export-babel-evaluate nil
         org-startup-folded nil
         org-adapt-indentation nil
@@ -672,7 +673,7 @@ region, down by N lines, or 1 line if N is nil."
 
 ;; fonts
 (set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-9")
-(set-face-attribute 'default nil :font "Source Code Pro-9")
+(set-face-attribute 'default nil :font "Source Code Pro-13")
 (set-face-attribute 'mode-line nil :font "Source Code Pro-9")
 
 ;; disable tool and menu bars
