@@ -204,6 +204,12 @@ configure the rest of the packages.
                                 (format-time-string "%Y-%m-%d")
                                 name)
                         "~/Dropbox/Notes/")))
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")))
+  (setq org-todo-keyword-faces
+        '(("TODO" . org-todo)
+          ("NEXT" . (:foreground "yellow4" :background "yellow1" :weight bold))
+          ("DONE" . org-done)))
   (setq org-default-notes-file "~/Dropbox/Notes/gtd/inbox.org"
         org-agenda-files '("~/Dropbox/Notes/gtd/inbox.org"
                            "~/Dropbox/Notes/gtd/tickler.org"
