@@ -190,13 +190,9 @@ configure the rest of the packages.
   (fset 'tex-font-lock-suscript 'ignore)
   (setq org-default-notes-file "~/Dropbox/Notes/gtd/inbox.org"
         org-agenda-files '("~/Dropbox/Notes/gtd/inbox.org"
-                           "~/Dropbox/Notes/gtd/tickler.org"
-                           "~/Dropbox/Notes/gtd/research.org"
-                           "~/Dropbox/Notes/gtd/work.org")
+                           "~/Dropbox/Notes/gtd/tickler.org")
         org-refile-targets '(("~/Dropbox/Notes/gtd/inbox.org" . (:maxlevel . 1))
-                             ("~/Dropbox/Notes/gtd/tickler.org" . (:maxlevel . 1))
-                             ("~/Dropbox/Notes/gtd/research.org" . (:maxlevel . 1))
-                             ("~/Dropbox/Notes/gtd/work.org" . (:maxlevel . 1)))
+                             ("~/Dropbox/Notes/gtd/tickler.org" . (:maxlevel . 1)))
         org-log-done 'time
         org-tags-column 0
         org-agenda-tags-column 0
