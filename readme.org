@@ -69,6 +69,11 @@ file, =/etc/nixos/configuration.nix=:
 
   system.stateVersion = "20.03";
 
+  fonts.fonts = with pkgs; [
+    dina-font
+    proggyfonts
+  ];
+
   environment.systemPackages = with pkgs; [
     wget
     vim
@@ -90,8 +95,12 @@ file, =/etc/nixos/configuration.nix=:
     unzip
     zip
     vlc
-    texlive.combined.scheme-medium
+    texlive.combined.scheme-full
     conda
+    gimp
+    inkscape
+    paraview
+    imagemagick
   ];
   programs.gnupg.agent.enable = true;
 }
@@ -650,9 +659,7 @@ region, down by N lines, or 1 line if N is nil."
 (windmove-default-keybindings)
 
 ;; fonts
-(set-face-attribute 'mode-line-inactive nil :font "Source Code Pro-9")
-(set-face-attribute 'default nil :font "Source Code Pro-13")
-(set-face-attribute 'mode-line nil :font "Source Code Pro-9")
+(set-face-attribute 'default nil :font "ProggyTinyTT-22")
 
 ;; disable tool and menu bars
 (tool-bar-mode -1)
