@@ -162,6 +162,8 @@ automatically installed from MELPA.  It is also an example of an /overlay/
 defining the package =emacsGit=.  Overlays are used by the /nix/ package manager
 to modify or extend the contents of the official nixpkgs
 (https://github.com/NixOS/nixpkgs).
+Notice how this overlay gets imported in `configuration.nix` in the beginning
+of this file.
 
 ** config/emacs/init.el
 
