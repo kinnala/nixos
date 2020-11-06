@@ -157,15 +157,17 @@ self: super: {
 #+end_src
 
 It actually uses the function =emacsWithPackagesFromUsePackage= to parse my
-Emacs configuration and determine which addon packages should be automatically
-installed from MELPA.
+Emacs configuration below and determine which addon packages should be
+automatically installed from MELPA.  It is also an example of an /overlay/
+defining the package =emacsGit=.  Overlays are used by the /nix/ package manager
+to modify or extend the contents of the official nixpkgs
+(https://github.com/NixOS/nixpkgs).
 
 ** config/emacs/init.el
 
-The rest of the snippets are combined into the file
-=/etc/nixos/config/emacs/init.el=. This file I have symlinked to
-=~/.config/emacs/init.el= so that Emacs running under non-root user will find
-it.
+The rest of the snippets are combined into the single file
+=/etc/nixos/config/emacs/init.el=. This file I manually symlink to
+=~/.config/emacs/init.el=.
 
 In the first snippet I simply initialize =use-package= which is used to
 configure the rest of the packages.
@@ -275,6 +277,7 @@ configure the rest of the packages.
          ("C-x C-f" . counsel-find-file)
          ("C-c g" . counsel-rg)
          ("C-c G" . counsel-git)
+         ("C-c j" . counsel-file-jump)
          ("C-c o" . counsel-org-rg)
          ("C-c l" . counsel-nixpkgs-rg)
          ("C-c L" . counsel-nixpkgs-file)
@@ -332,7 +335,8 @@ configure the rest of the packages.
   :init
   (define-key global-map (kbd "C-'") 'mc-hide-unmatched-lines-mode)
   (define-key global-map (kbd "C-,") 'mc/mark-next-like-this)
-  (define-key global-map (kbd "C-;") 'mc/mark-all-dwim))
+  (define-key global-map (kbd "C-;") 'mc/mark-all-dwim)
+  (setq hum/lines-to-expand 1))
 
 (use-package phi-search
   :after multiple-cursors
