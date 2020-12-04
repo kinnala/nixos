@@ -38,12 +38,17 @@ file, =/etc/nixos/configuration.nix=:
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
   networking.hostName = "tunkki";
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
   networking.interfaces.wlp0s20f3.useDHCP = true;
+
+  networking.firewall.allowedTCPPortRanges = [
+    { from = 5000; to = 5002; }
+  ];
 
   i18n.defaultLocale = "fi_FI.UTF-8";
   time.timeZone = "Europe/Helsinki";
@@ -69,9 +74,8 @@ file, =/etc/nixos/configuration.nix=:
 
   virtualisation.docker.enable = true;
   virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableExtensionPack = true;
 
-  system.stateVersion = "20.03";
+  system.stateVersion = "20.09";
 
   fonts.fonts = with pkgs; [
     dina-font
@@ -758,8 +762,7 @@ region, down by N lines, or 1 line if N is nil."
   (let ((frame (nth n (reverse (frame-list)))))
     (if frame
         (select-frame-set-input-focus frame)
-      (select-frame-set-input-focus (make-frame))
-      (toggle-frame-fullscreen))))
+      (select-frame-set-input-focus (make-frame)))))
 
 (define-key global-map
   (kbd "M-1")
