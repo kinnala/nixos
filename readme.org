@@ -6,16 +6,13 @@
 /Declarative configuration/ refers to the practice of defining the preferred
 state of a system instead of individual steps for achieving it.  Such practice
 requires advanced tools that automagically compare the current state of the
-system with its description to determine the next action.
-
-In the context of cloud software deployment, one example of a declaratively
-configured system is [[https://kubernetes.io/][Kubernetes]] which has revolutionized how applications are
-deployed to the cloud.  The benefits of such an approach are clear: it is safer
-to deploy updates when reverting is as simple as rolling back the configuration.
+system with its description to determine the next action.  The benefits of such
+an approach are clear: it is safer to deploy updates when reverting is as simple
+as rolling back the configuration.
 
 Today, I have strong opinions on how my computing environment should look like
-and a clear vision of its preferred state.  Hence, it is possible for me to up
-my game and apply declarative configuration to my operating system and Emacs.
+and a clear vision of its preferred state.  Hence, it is possible for me to
+apply declarative configuration to my operating system and Emacs.
 
 * Define state using configuration.nix
 
