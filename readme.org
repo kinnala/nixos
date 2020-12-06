@@ -69,6 +69,11 @@ file, =/etc/nixos/configuration.nix=:
     extraGroups = [ "wheel" "networkmanager" "docker" "vboxusers" ];
   };
 
+  services.syncthing.enable = true;
+  services.syncthing.user = "tom";
+  services.syncthing.dataDir = "/home/tom/Sync";
+  services.syncthing.configDir = "/home/tom/.config/syncthing";
+
   virtualisation.docker.enable = true;
   virtualisation.virtualbox.host.enable = true;
 
@@ -106,6 +111,8 @@ file, =/etc/nixos/configuration.nix=:
     inkscape
     paraview
     imagemagick
+    ffmpeg
+    gphoto2
   ];
   programs.gnupg.agent.enable = true;
 }
@@ -122,9 +129,8 @@ The same applies to a full system reinstall.  In a fresh NixOS installation, I
 can introduce Emacs into a temporary shell environment and /tangle/ this
 document via
 
-#+begin_src sh :results output silent
-nix-shell -p emacs
-emacs --file readme.org --eval '(progn (org-babel-tangle) (kill-emacs))'
+#+begin_src sh :dir (concat "/sudo::" (expand-file-name ".")) :results output silent
+sudo emacs --file readme.org --eval '(progn (org-babel-tangle) (kill-emacs))'
 #+end_src
 
 which, among other things, writes =configuration.nix= into the path expected by
