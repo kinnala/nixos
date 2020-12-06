@@ -26,8 +26,8 @@ file, =/etc/nixos/configuration.nix=:
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/86707a04d9679a92b7454e073a13e0c676e59e6d.tar.gz";
-      sha256 = "1x3l0iypc1zchm364axp66m70jjik4pl413lrwj37w320gv23fh5";
+      url = "https://github.com/nix-community/emacs-overlay/archive/7a5064539be6861e2d1744ed8c57b906bf129950.tar.gz";
+      sha256 = "0fx2jh0wc5d8v2769sw5izv2c4bb6kbzc2yr57qzkbi3k10w97xh";
     }))
     (import /etc/nixos/overlays/emacs.nix)
   ];
@@ -152,7 +152,8 @@ For example, the following snippet gets exported to =/etc/nixos/overlays/emacs.n
 self: super: {
   emacsGit = (self.emacsWithPackagesFromUsePackage {
       config = builtins.readFile /etc/nixos/config/emacs/init.el;
-      package = super.emacsGit;
+      package = super.emacs;  # change to super.emacsGit to use master
+      alwaysEnsure = true;
   });
 }
 #+end_src
@@ -730,6 +731,7 @@ region, down by N lines, or 1 line if N is nil."
 
 ;; browse in chrome
 (setq browse-url-browser-function 'browse-url-chrome)
+(setq shr-width 80)
 
 ;; don't fontify latex
 (setq font-latex-fontify-script nil)
