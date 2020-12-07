@@ -1,8 +1,9 @@
-#+TITLE: Emacs and declarative personal computing
+#+TITLE: My NixOS config files
 #+AUTHOR: Tom Gustafsson
 
 * Introduction
 
+This repository contains my literal and declarative NixOS configuration.
 /Declarative configuration/ refers to the practice of defining the preferred
 state of a system instead of individual steps for achieving it.  Such practice
 requires advanced tools that automagically compare the current state of the
@@ -10,15 +11,11 @@ system with its description to determine the next action.  The benefits of such
 an approach are clear: it is safer to deploy updates when reverting is as simple
 as rolling back the configuration.
 
-Today, I have strong opinions on how my computing environment should look like
-and a clear vision of its preferred state.  Hence, it is possible for me to
-apply declarative configuration to my operating system and Emacs.
-
 * Define state using configuration.nix
 
-[[https://nixos.org/][NixOS]] is a GNU/Linux system with an unique approach to configuration and package
-management.  The preferred state of the operating system is defined in a single
-file, =/etc/nixos/configuration.nix=:
+In [[https://nixos.org/][NixOS]] the preferred state of the operating system is defined in a single
+file, =/etc/nixos/configuration.nix=.  The following snippet is
+=configuration.nix= for my Thinkpad Carbon X1 laptop:
 
 #+begin_src nix :mkdirp yes :tangle /etc/nixos/configuration.nix
 { config, pkgs, ... }: {
@@ -79,11 +76,6 @@ file, =/etc/nixos/configuration.nix=:
 
   system.stateVersion = "20.09";
 
-  fonts.fonts = with pkgs; [
-    dina-font
-    proggyfonts
-  ];
-
   environment.systemPackages = with pkgs; [
     wget
     vim
@@ -118,30 +110,28 @@ file, =/etc/nixos/configuration.nix=:
 }
 #+end_src
 
-This file defines the system state including the software packages.  Adding a
-new package is as simple as modifying =configuration.nix= and running
+Adding a new package is as simple as modifying =configuration.nix= and running
 
 #+begin_src sh :results output silent
 nixos-rebuild switch
 #+end_src
 
 The same applies to a full system reinstall.  In a fresh NixOS installation, I
-can introduce Emacs into a temporary shell environment and /tangle/ this
-document via
+can introduce Emacs into a temporary shell environment using =nix-shell -p
+emacs= and /tangle/ this document via
 
 #+begin_src sh :dir (concat "/sudo::" (expand-file-name ".")) :results output silent
 sudo emacs --file readme.org --eval '(progn (org-babel-tangle) (kill-emacs))'
 #+end_src
 
-which, among other things, writes =configuration.nix= into the path expected by
-NixOS.
+which writes =configuration.nix= and other configuration files defined by this
+document into the path expected by NixOS.
 
 * Emacs, org-mode and tangling
 
-This document is actually an example of /literate programming/ using Emacs
-/org-mode/.  Using org-mode, source code for different programming languages can
-be intertwined in a single document and exported to the correct paths by
-evaluating the following Emacs Lisp expression:
+This document uses Emacs' org-mode.  Using org-mode, source code for different
+programming languages can be intertwined in a single document and exported to
+the correct paths by evaluating the following Emacs Lisp expression:
 
 #+begin_src emacs-lisp
 (org-babel-tangle)  ;; tangle an org-mode document
@@ -165,24 +155,23 @@ self: super: {
 #+end_src
 
 It actually uses the function =emacsWithPackagesFromUsePackage= to parse my
-Emacs configuration below and determine which addon packages should be
-automatically installed from MELPA.  It is also an example of an /overlay/
-defining the package =emacsGit=.  Overlays are used by the /nix/ package manager
-to modify or extend the contents of the official nixpkgs
-(https://github.com/NixOS/nixpkgs).
-Notice how this overlay gets imported in `configuration.nix` in the beginning
-of this file.
+Emacs Lisp configuration below and determine which addon packages should be
+automatically installed from MELPA in the closure.  It is also an example of an
+/overlay/.  Overlays can be used by the /nix/ package manager to modify or
+extend the contents of the official nixpkgs (https://github.com/NixOS/nixpkgs).
+Notice how this overlay (=overlays/emacs.nix=) gets imported in
+=configuration.nix= in the beginning of this file.
 
 ** config/emacs/init.el
 
 The rest of the snippets are combined into the single file
 =/etc/nixos/config/emacs/init.el=. This file I manually symlink to
-=~/.config/emacs/init.el=.
+=~/emacs.d/init.el= so that Emacs instance run on my user will find it.
 
-In the first snippet I simply initialize =use-package= which is used to
-configure the rest of the packages.
+In the first snippet I initialize =use-package= which is used to configure the
+rest of the packages.
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (require 'package)
 (package-initialize 'noactivate)
 (eval-when-compile
@@ -191,7 +180,7 @@ configure the rest of the packages.
 
 *** org-mode
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package org
   :commands org-babel-do-load-languages
   :config
@@ -208,10 +197,10 @@ configure the rest of the packages.
   (add-hook 'org-agenda-finalize-hook
             (lambda ()
               (save-excursion
-                (set-face-attribute 'org-agenda-structure nil :height (car moe-theme-resize-org-title))
-                (set-face-attribute 'org-agenda-date nil :height (cadr moe-theme-resize-org-title))
-                (set-face-attribute 'org-agenda-date-today nil :height (cadr moe-theme-resize-org-title))
-                (set-face-attribute 'org-agenda-date-weekend nil :height (cadr moe-theme-resize-org-title)))))
+                (set-face-attribute 'org-agenda-structure nil :height (car moe-theme-resize-title-org))
+                (set-face-attribute 'org-agenda-date nil :height (cadr moe-theme-resize-title-org))
+                (set-face-attribute 'org-agenda-date-today nil :height (cadr moe-theme-resize-title-org))
+                (set-face-attribute 'org-agenda-date-weekend nil :height (cadr moe-theme-resize-title-org)))))
   (global-set-key [remap org-set-tags-command] #'counsel-org-tag)
   (fset 'tex-font-lock-suscript 'ignore)
   (setq org-default-notes-file "~/Dropbox/Notes/gtd/inbox.org"
@@ -255,7 +244,7 @@ configure the rest of the packages.
 
 *** ivy/counsel/swiper and wgrep
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package ivy
   :commands
   ivy-mode
@@ -303,7 +292,7 @@ configure the rest of the packages.
 
 *** magit
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package magit
   :init
   (setq magit-repository-directories '(("~/src" . 1)))
@@ -313,7 +302,7 @@ configure the rest of the packages.
 
 *** multiline editing
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package expand-region
   :after (org)
   :bind ("C-." . er/expand-region)
@@ -359,7 +348,7 @@ configure the rest of the packages.
 
 *** dired
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (defalias 'use-internal-package 'use-package)
 
 (use-internal-package term)
@@ -399,7 +388,7 @@ configure the rest of the packages.
 
 *** syntax highlighting
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package json-mode)
 
 (use-package julia-mode)
@@ -423,7 +412,7 @@ configure the rest of the packages.
 
 *** theme
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package moe-theme
   :commands moe-light
   :init
@@ -469,7 +458,7 @@ configure the rest of the packages.
 
 *** python
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package dumb-jump
   :bind (("M-." . dumb-jump-go)
          ("M-," . dumb-jump-back))
@@ -595,7 +584,7 @@ region, down by N lines, or 1 line if N is nil."
 
 *** misc stuff
 
-#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el
+#+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package exec-path-from-shell
   :commands exec-path-from-shell-initialize
   :init (exec-path-from-shell-initialize))
