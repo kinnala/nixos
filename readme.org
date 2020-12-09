@@ -112,8 +112,8 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
 
 Adding a new package is as simple as modifying =configuration.nix= and running
 
-#+begin_src sh :results output silent
-nixos-rebuild switch
+#+begin_src sh :dir "/sudo::" :results output silent
+sudo nixos-rebuild switch
 #+end_src
 
 The same applies to a full system reinstall.  In a fresh NixOS installation, I
@@ -125,7 +125,7 @@ sudo emacs --file readme.org --eval '(progn (org-babel-tangle) (kill-emacs))'
 #+end_src
 
 which writes =configuration.nix= and other configuration files defined by this
-document into the path expected by NixOS.
+document into the paths expected by NixOS.
 
 * Emacs, org-mode and tangling
 
@@ -180,6 +180,9 @@ rest of the packages.
 
 *** org-mode
 
+This is my org-mode configuration.  I'm mainly using org-agenda, org-babel and
+sometimes export org documents to HTML and TeX.
+
 #+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package org
   :commands org-babel-do-load-languages
@@ -210,6 +213,7 @@ rest of the packages.
         org-log-done 'time
         org-tags-column 0
         org-agenda-tags-column 0
+        org-agenda-window-setup 'only-window
         org-export-babel-evaluate nil
         org-startup-folded nil
         org-adapt-indentation nil
@@ -243,6 +247,10 @@ rest of the packages.
 #+end_src
 
 *** ivy/counsel/swiper and wgrep
+
+Currently I'm using heavily the features of counsel.  For example, I tend to use
+swiper to find particular lines from a long document or dired buffer.  However,
+the configuration is pretty basic and consists mainly of custom bindings.
 
 #+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package ivy
@@ -291,6 +299,8 @@ rest of the packages.
 #+end_src
 
 *** magit
+
+Magit is obviously the de facto way to use Git.
 
 #+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package magit
