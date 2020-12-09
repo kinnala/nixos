@@ -422,48 +422,55 @@ Magit is obviously the de facto way to use Git.
 
 *** theme
 
+Lately I've been flipping between =leuven-theme= where I enjoy all the defaults
+and =moe-theme= which requires some customization to fit my liking.
+
 #+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
-(use-package moe-theme
-  :commands moe-light
-  :init
-  (require 'org)
-  (setq moe-theme-resize-title-markdown '(2.0 1.7 1.5 1.3 1.0 1.0))
-  (setq moe-theme-resize-title-org '(2.2 1.8 1.6 1.4 1.2 1.0 1.0 1.0 1.0))
-  (setq moe-theme-resize-title-rst '(2.0 1.7 1.5 1.3 1.1 1.0))
-  (put 'diredp-tagged-autofile-name 'face-alias 'diredfl-tagged-autofile-name)
-  (put 'diredp-autofile-name 'face-alias 'diredfl-autofile-name)
-  (put 'diredp-ignored-file-name 'face-alias 'diredfl-ignored-file-name)
-  (put 'diredp-symlink 'face-alias 'diredfl-symlink)
-  (put 'diredp-compressed-file-name 'face-alias 'diredfl-compressed-file-name)
-  (put 'diredp-file-suffix 'face-alias 'diredfl-file-suffix)
-  (put 'diredp-compressed-extensions 'face-alias 'diredfl-compressed-extensions)
-  (put 'diredp-deletion 'face-alias 'diredfl-deletion)
-  (put 'diredp-deletion-file-name 'face-alias 'diredfl-deletion-file-name)
-  (put 'diredp-flag-mark-line 'face-alias 'diredfl-flag-mark-line)
-  (put 'diredp-rare-priv 'face-alias 'diredfl-rare-priv)
-  (put 'diredp-number 'face-alias 'diredfl-number)
-  (put 'diredp-exec-priv 'face-alias 'diredfl-exec-priv)
-  (put 'diredp-file-name 'face-alias 'diredfl-file-name)
-  (put 'diredp-dir-heading 'face-alias 'diredfl-dir-heading)
-  (put 'diredp-compressed-file-suffix 'face-alias 'diredfl-compressed-file-suffix)
-  (put 'diredp-flag-mark 'face-alias 'diredfl-flag-mark)
-  (put 'diredp-mode-set-explicitly 'face-alias 'diredfl-mode-set-explicitly)
-  (put 'diredp-executable-tag 'face-alias 'diredfl-executable-tag)
-  (put 'diredp-global-mode-hook 'face-alias 'diredfl-global-mode-hook)
-  (put 'diredp-ignore-compressed-flag 'face-alias 'diredfl-ignore-compressed-flag)
-  (put 'diredp-dir-priv 'face-alias 'diredfl-dir-priv)
-  (put 'diredp-date-time 'face-alias 'diredfl-date-time)
-  (put 'diredp-other-priv 'face-alias 'diredfl-other-priv)
-  (put 'diredp-no-priv 'face-alias 'diredfl-no-priv)
-  (put 'diredp-link-priv 'face-alias 'diredfl-link-priv)
-  (put 'diredp-write-priv 'face-alias 'diredfl-write-priv)
-  (put 'diredp-global-mode-buffers 'face-alias 'diredfl-global-mode-buffers)
-  (put 'dired-directory 'face-alias 'diredfl-dir-name)
-  (put 'diredp-read-priv 'face-alias 'diredfl-read-priv)
-  (global-hl-line-mode)
-  (moe-light)
-  (set-face-attribute 'font-lock-type-face nil :box 1)
-  (set-face-attribute 'font-lock-function-name-face nil :box 1))
+(use-package leuven-theme
+  :config
+  (load-theme 'leuven t))
+
+;; (use-package moe-theme
+;;   :commands moe-light
+;;   :init
+;;   (require 'org)
+;;   (setq moe-theme-resize-title-markdown '(2.0 1.7 1.5 1.3 1.0 1.0))
+;;   (setq moe-theme-resize-title-org '(2.2 1.8 1.6 1.4 1.2 1.0 1.0 1.0 1.0))
+;;   (setq moe-theme-resize-title-rst '(2.0 1.7 1.5 1.3 1.1 1.0))
+;;   (put 'diredp-tagged-autofile-name 'face-alias 'diredfl-tagged-autofile-name)
+;;   (put 'diredp-autofile-name 'face-alias 'diredfl-autofile-name)
+;;   (put 'diredp-ignored-file-name 'face-alias 'diredfl-ignored-file-name)
+;;   (put 'diredp-symlink 'face-alias 'diredfl-symlink)
+;;   (put 'diredp-compressed-file-name 'face-alias 'diredfl-compressed-file-name)
+;;   (put 'diredp-file-suffix 'face-alias 'diredfl-file-suffix)
+;;   (put 'diredp-compressed-extensions 'face-alias 'diredfl-compressed-extensions)
+;;   (put 'diredp-deletion 'face-alias 'diredfl-deletion)
+;;   (put 'diredp-deletion-file-name 'face-alias 'diredfl-deletion-file-name)
+;;   (put 'diredp-flag-mark-line 'face-alias 'diredfl-flag-mark-line)
+;;   (put 'diredp-rare-priv 'face-alias 'diredfl-rare-priv)
+;;   (put 'diredp-number 'face-alias 'diredfl-number)
+;;   (put 'diredp-exec-priv 'face-alias 'diredfl-exec-priv)
+;;   (put 'diredp-file-name 'face-alias 'diredfl-file-name)
+;;   (put 'diredp-dir-heading 'face-alias 'diredfl-dir-heading)
+;;   (put 'diredp-compressed-file-suffix 'face-alias 'diredfl-compressed-file-suffix)
+;;   (put 'diredp-flag-mark 'face-alias 'diredfl-flag-mark)
+;;   (put 'diredp-mode-set-explicitly 'face-alias 'diredfl-mode-set-explicitly)
+;;   (put 'diredp-executable-tag 'face-alias 'diredfl-executable-tag)
+;;   (put 'diredp-global-mode-hook 'face-alias 'diredfl-global-mode-hook)
+;;   (put 'diredp-ignore-compressed-flag 'face-alias 'diredfl-ignore-compressed-flag)
+;;   (put 'diredp-dir-priv 'face-alias 'diredfl-dir-priv)
+;;   (put 'diredp-date-time 'face-alias 'diredfl-date-time)
+;;   (put 'diredp-other-priv 'face-alias 'diredfl-other-priv)
+;;   (put 'diredp-no-priv 'face-alias 'diredfl-no-priv)
+;;   (put 'diredp-link-priv 'face-alias 'diredfl-link-priv)
+;;   (put 'diredp-write-priv 'face-alias 'diredfl-write-priv)
+;;   (put 'diredp-global-mode-buffers 'face-alias 'diredfl-global-mode-buffers)
+;;   (put 'dired-directory 'face-alias 'diredfl-dir-name)
+;;   (put 'diredp-read-priv 'face-alias 'diredfl-read-priv)
+;;   (global-hl-line-mode)
+;;   (moe-light)
+;;   (set-face-attribute 'font-lock-type-face nil :box 1)
+;;   (set-face-attribute 'font-lock-function-name-face nil :box 1))
 #+end_src
 
 *** python
