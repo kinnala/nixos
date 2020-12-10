@@ -435,7 +435,11 @@ Magit is obviously the de facto way to use Git.
 (use-package julia-mode)
 
 (use-package highlight-indentation
-  :init (add-hook 'prog-mode-hook 'highlight-indentation-mode))
+  :init
+  (defun set-hl-indent-color ()
+    (set-face-background 'highlight-indentation-face "#AAAAAA"))
+  (add-hook 'prog-mode-hook 'highlight-indentation-mode)
+  (add-hook 'prog-mode-hook 'set-hl-indent-color))
 
 (use-package yaml-mode)
 
@@ -459,7 +463,9 @@ and =moe-theme= which requires some customization to fit my liking.
 #+begin_src elisp :mkdirp yes :tangle /etc/nixos/config/emacs/init.el :tangle-mode (identity #o444)
 (use-package leuven-theme
   :config
-  (load-theme 'leuven t))
+  (load-theme 'leuven t)
+  (set-face-attribute 'font-lock-type-face nil :box 1)
+  (set-face-attribute 'font-lock-function-name-face nil :box 1))
 
 ;; (use-package moe-theme
 ;;   :commands moe-light
@@ -471,8 +477,6 @@ and =moe-theme= which requires some customization to fit my liking.
 ;;   (moe-light))
 
 (global-hl-line-mode)
-(set-face-attribute 'font-lock-type-face nil :box 1)
-(set-face-attribute 'font-lock-function-name-face nil :box 1)
 #+end_src
 
 *** python
