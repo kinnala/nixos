@@ -197,13 +197,6 @@ sometimes export org documents to HTML and TeX.
                               '((python . t)
                                 (shell . t)))))
   (add-hook 'org-babel-after-execute-hook 'org-redisplay-inline-images)
-  (add-hook 'org-agenda-finalize-hook
-            (lambda ()
-              (save-excursion
-                (set-face-attribute 'org-agenda-structure nil :height (car moe-theme-resize-title-org))
-                (set-face-attribute 'org-agenda-date nil :height (cadr moe-theme-resize-title-org))
-                (set-face-attribute 'org-agenda-date-today nil :height (cadr moe-theme-resize-title-org))
-                (set-face-attribute 'org-agenda-date-weekend nil :height (cadr moe-theme-resize-title-org)))))
   (global-set-key [remap org-set-tags-command] #'counsel-org-tag)
   (fset 'tex-font-lock-suscript 'ignore)
   (setq org-default-notes-file "~/Dropbox/Notes/gtd/inbox.org"
