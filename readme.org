@@ -41,7 +41,7 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
   networking.interfaces.wlp0s20f3.useDHCP = true;
 
   networking.firewall.allowedTCPPortRanges = [
-    { from = 5000; to = 5002; }
+    { from = 5000; to = 5003; }
   ];
 
   i18n.defaultLocale = "fi_FI.UTF-8";
@@ -105,6 +105,8 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     imagemagick
     ffmpeg
     gphoto2
+    offlineimap
+    mu
   ];
   programs.gnupg.agent.enable = true;
 }
