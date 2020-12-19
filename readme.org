@@ -140,11 +140,12 @@ the correct paths by evaluating the following Emacs Lisp expression:
 #+end_src
 
 Executing the function =org-babel-tangle= will traverse through the active
-document, extract each source code block and export them to the paths defined in
-the source code block headers (that are, unfortunately, not visible in the HTML
-version rendered by Github: see the raw file for details).
+document, extract each source code block and export them to the paths defined
+in the source code block headers (that are, unfortunately, not visible in the
+HTML version rendered by Github: see the raw file for details).
 
-For example, the following snippet gets exported to =/etc/nixos/overlays/emacs.nix=
+For example, the following snippet gets exported to
+=/etc/nixos/overlays/emacs.nix=
 
 #+begin_src nix :mkdirp yes :tangle /etc/nixos/overlays/emacs.nix
 self: super: {
@@ -684,7 +685,7 @@ region, down by N lines, or 1 line if N is nil."
 (windmove-default-keybindings)
 
 ;; fonts
-(set-face-attribute 'default nil :font "Source Code Pro-11")
+(set-face-attribute 'default nil :font "Source Code Pro-10")
 
 ;; disable tool and menu bars
 (tool-bar-mode -1)
