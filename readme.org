@@ -797,7 +797,7 @@ region, down by N lines, or 1 line if N is nil."
 ;; bind find config
 (define-key global-map (kbd "<f10>")
   (lambda () (interactive)
-    (find-file "~/Dropbox/Config/nixpkgs/README.org")))
+    (find-file "~/src/nixos/readme.org")))
 
 ;; bind compile
 (define-key global-map (kbd "<f12>") 'compile)
