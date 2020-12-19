@@ -684,7 +684,7 @@ region, down by N lines, or 1 line if N is nil."
 (windmove-default-keybindings)
 
 ;; fonts
-(set-face-attribute 'default nil :font "Source Code Pro-12")
+(set-face-attribute 'default nil :font "Source Code Pro-11")
 
 ;; disable tool and menu bars
 (tool-bar-mode -1)
@@ -724,7 +724,7 @@ region, down by N lines, or 1 line if N is nil."
 (setq scroll-preserve-screen-position t)
 
 ;; set default fill width (e.g. M-q)
-(setq-default fill-column 80)
+(setq-default fill-column 79)
 
 ;; window dividers
 (fringe-mode 0)
