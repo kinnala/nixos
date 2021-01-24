@@ -92,8 +92,6 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     imagemagick
     ffmpeg
     gphoto2
-    offlineimap
-    mu
   ];
   programs.gnupg.agent.enable = true;
 }
