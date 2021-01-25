@@ -92,6 +92,8 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     imagemagick
     ffmpeg
     gphoto2
+    thunderbird
+    emacs
   ];
   programs.gnupg.agent.enable = true;
 }
