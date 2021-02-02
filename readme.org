@@ -94,8 +94,10 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     gphoto2
     thunderbird
     emacs
+    firefox
   ];
   programs.gnupg.agent.enable = true;
+  programs.geary.enable = false;
 }
 #+end_src
 
