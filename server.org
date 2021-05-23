@@ -1,0 +1,115 @@
+* open dired
+
+#+begin_src emacs-lisp
+(find-file "/ssh:koti@tankki:/home/koti")
+#+end_src
+* configuration.nix
+
+The following configuration gets tangled to the server:
+
+#+begin_src nix :tangle /ssh:koti@tankki|sudo::/etc/nixos/configuration.nix
+{ config, pkgs, ... }:
+
+{
+  imports =
+    [
+      ./hardware-configuration.nix
+    ];
+
+  boot.loader.systemd-boot.enable = true;
+
+  networking.hostName = "tankki";
+  nixpkgs.config.allowUnfree = true;
+  time.timeZone = "Europe/Helsinki";
+
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
+  networking.useDHCP = false;
+  networking.interfaces.enp3s0.useDHCP = true;
+
+  i18n.defaultLocale = "fi_FI.UTF-8";
+
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome3.enable = true;
+
+  services.xserver.layout = "fi";
+
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+
+  users.users.koti = {
+    isNormalUser = true;
+    home = "/home/koti";
+    extraGroups = [ "wheel" "networkmanager" ];
+  };
+
+  environment.systemPackages = with pkgs; [
+    wget
+    vim
+    firefox
+    bash
+    ripgrep
+    htop
+    gnumake
+    git
+    google-chrome
+    vlc
+    xclip
+    tmux
+    gnupg
+  ];
+
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+
+  services.cron.enable = true;
+
+  services.openssh.enable = true;
+
+  programs.gnupg.agent.enable = true;
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "20.09"; # Did you read the comment?
+
+}
+#+end_src
+
+Then run the following command to enable the configuration:
+
+#+begin_src sh :dir /ssh:koti@tankki|sudo::/ :results output verbatim
+sudo nixos-rebuild switch
+#+end_src
+
+#+RESULTS:
+: building Nix...
+: building the system configuration...
+: activating the configuration...
+: setting up /etc...
+: reloading user units for koti...
+: setting up tmpfiles
+: the following new units were started: session-7.scope
+* other commands
+
+#+begin_src sh :dir /ssh:koti@tankki:/ :results output verbatim
+df -h
+#+end_src
+
+#+RESULTS:
+: Filesystem      Size  Used Avail Use% Mounted on
+: devtmpfs        190M     0  190M   0% /dev
+: tmpfs           1.9G   98M  1.8G   6% /dev/shm
+: tmpfs           948M  6.8M  941M   1% /run
+: tmpfs           1.9G  456K  1.9G   1% /run/wrappers
+: /dev/sda1       431G   40G  370G  10% /
+: tmpfs           4.0M     0  4.0M   0% /sys/fs/cgroup
+: /dev/sda3       510M   17M  494M   4% /boot
+: tmpfs           380M  104K  379M   1% /run/user/1000
