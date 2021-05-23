@@ -27,6 +27,7 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
   networking.useDHCP = false;
   networking.interfaces.enp0s31f6.useDHCP = true;
   networking.interfaces.wlp0s20f3.useDHCP = true;
+  networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
 
   networking.firewall.allowedTCPPortRanges = [
     { from = 5000; to = 5003; }
@@ -53,11 +54,6 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     home = "/home/tom";
     extraGroups = [ "wheel" "networkmanager" "docker" "vboxusers" ];
   };
-
-  services.syncthing.enable = true;
-  services.syncthing.user = "tom";
-  services.syncthing.dataDir = "/home/tom/Sync";
-  services.syncthing.configDir = "/home/tom/.config/syncthing";
 
   virtualisation.docker.enable = true;
   virtualisation.virtualbox.host.enable = true;
@@ -95,6 +91,7 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     thunderbird
     emacs
     firefox
+    keepassxc
   ];
   programs.gnupg.agent.enable = true;
   programs.geary.enable = false;
