@@ -42,9 +42,9 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
   services.xserver.enable = true;
   services.xserver.layout = "fi";
   services.xserver.libinput.enable = true;
-  services.xserver.libinput.tapping = false;
+  services.xserver.libinput.touchpad.tapping = false;
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome3.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.gutenprint ];
