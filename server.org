@@ -1,13 +1,13 @@
 * open dired
 
 #+begin_src emacs-lisp
-(find-file "/ssh:koti@tankki:/home/koti")
+(find-file "/ssh:koti@192.168.10.54:/home/koti")
 #+end_src
 * configuration.nix
 
 The following configuration gets tangled to the server:
 
-#+begin_src nix :tangle /ssh:koti@tankki|sudo::/etc/nixos/configuration.nix
+#+begin_src nix :tangle /ssh:koti@192.168.10.54|sudo::/etc/nixos/configuration.nix
 { config, pkgs, ... }:
 
 {
@@ -76,7 +76,7 @@ The following configuration gets tangled to the server:
 
 Then run the following command to enable the configuration:
 
-#+begin_src sh :dir /ssh:koti@tankki|sudo::/ :results output verbatim
+#+begin_src sh :dir /ssh:koti@192.168.10.54|sudo::/ :results output verbatim
 sudo nixos-rebuild switch
 #+end_src
 
@@ -90,7 +90,7 @@ sudo nixos-rebuild switch
 : the following new units were started: session-7.scope
 * other commands
 
-#+begin_src sh :dir /ssh:koti@tankki:/ :results output verbatim
+#+begin_src sh :dir /ssh:koti@192.168.10.54:/ :results output verbatim
 df -h
 #+end_src
 
