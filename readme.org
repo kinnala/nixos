@@ -95,7 +95,7 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     emacs
     firefox
     keepassxc
-    st
+    duplicity
   ];
   programs.gnupg.agent.enable = true;
   programs.geary.enable = false;
