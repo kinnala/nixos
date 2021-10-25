@@ -53,9 +53,6 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
     isNormalUser = true;
     home = "/home/tom";
     extraGroups = [ "wheel" "networkmanager" "docker" "vboxusers" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJBt88oO22iUmYm4K1JX9Vz6QRHPeiUh44fFME6QTgIX"
-    ];
   };
 
   virtualisation.docker.enable = true;
@@ -99,10 +96,6 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
   ];
   programs.gnupg.agent.enable = true;
   programs.geary.enable = false;
-  programs.mosh.enable = true;
-  services.openssh.enable = true;
-  services.openssh.passwordAuthentication = false;
-  services.openssh.ports = [ 27015 ];
 }
 #+end_src
 
