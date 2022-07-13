@@ -32,6 +32,9 @@ file, =/etc/nixos/configuration.nix=.  The following snippet is
   networking.firewall.allowedTCPPortRanges = [
     { from = 5000; to = 5003; }
   ];
+  networking.firewall.allowedUDPPortRanges = [
+    { from = 5000; to = 5003; }
+  ];
 
   i18n.defaultLocale = "fi_FI.UTF-8";
   time.timeZone = "Europe/Helsinki";
