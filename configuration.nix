@@ -14,12 +14,12 @@
   networking.interfaces.wlp0s20f3.useDHCP = true;
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
 
-  networking.firewall.allowedTCPPortRanges = [
-    { from = 5000; to = 5003; }
-  ];
-  networking.firewall.allowedUDPPortRanges = [
-    { from = 5000; to = 5003; }
-  ];
+  # networking.firewall.allowedTCPPortRanges = [
+  #   { from = 5000; to = 5003; }
+  # ];
+  # networking.firewall.allowedUDPPortRanges = [
+  #   { from = 5000; to = 5003; }
+  # ];
 
   i18n.defaultLocale = "fi_FI.UTF-8";
   time.timeZone = "Europe/Helsinki";
@@ -34,8 +34,8 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.gutenprint ];
+  # services.printing.enable = true;
+  # services.printing.drivers = [ pkgs.gutenprint ];
   
   users.users.tom = {
     isNormalUser = true;
@@ -60,7 +60,7 @@
     git
     tmux
     dropbox-cli
-    google-chrome
+    # google-chrome
     tree
     pass
     pinentry
