@@ -62,7 +62,6 @@
     dropbox-cli
     # google-chrome
     tree
-    pass
     pinentry
     docker-compose
     unzip
@@ -81,6 +80,9 @@
     firefox
     keepassxc
     duplicity
+    wxmaxima
+    geogebra
+    speedcrunch
   ];
   programs.gnupg.agent.enable = true;
   programs.geary.enable = false;

@@ -1,8 +1,9 @@
 #+TITLE: NixOS configuration files
 #+AUTHOR: Tom Gustafsson
 
-* Introduction
+This repository contains my NixOS system configurations.  My Emacs
+configuration is in a [[https://github.com/kinnala/nixemacs/][different repository]].  Rebuild by calling
 
-This repository contains my NixOS system configurations.  My user-level Emacs
-configuration is in a [[https://github.com/kinnala/nixemacs/][different repository]].  Rebuild by calling /nixos-rebuild
-switch --flake '.#'/.
+#+BEGIN_SRC sh
+sudo nixos-rebuild switch --flake '.#'
+#+END_SRC
