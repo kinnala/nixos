@@ -15,7 +15,7 @@
   networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
 
   # networking.firewall.allowedTCPPortRanges = [
-  #   { from = 5000; to = 5003; }
+  #   { from = 8080; to = 8081; }
   # ];
   # networking.firewall.allowedUDPPortRanges = [
   #   { from = 5000; to = 5003; }
@@ -60,7 +60,7 @@
     git
     tmux
     dropbox-cli
-    # google-chrome
+    google-chrome
     tree
     pinentry
     docker-compose
