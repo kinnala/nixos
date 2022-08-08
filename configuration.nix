@@ -62,15 +62,13 @@
   environment.systemPackages = with pkgs; [
     ((vim_configurable.override {}).customize {
       name = "vim";
-      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [ vim-nix ];
-        opt = [];
-      };
+      vimrcConfig.packages.myplugins = { start = [ vimPlugins.vim-nix ]; };
       vimrcConfig.customRC = ''
         set nocompatible
+        set hlsearch
+        set backspace=indent,eol,start
         syntax on
         filetype plugin indent on
-        colo desert
         set tabstop=4
         set shiftwidth=4
         set expandtab
