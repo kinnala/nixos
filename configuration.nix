@@ -34,12 +34,12 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  services.openssh = {
-    enable = true;
-    passwordAuthentication = false;
-    kbdInteractiveAuthentication = false;
-    ports = [ 20022 ];
-  };
+  # services.openssh = {
+  #   enable = true;
+  #   passwordAuthentication = false;
+  #   kbdInteractiveAuthentication = false;
+  #   ports = [ 20022 ];
+  # };
 
   # services.printing.enable = true;
   # services.printing.drivers = [ pkgs.gutenprint ];
@@ -48,9 +48,9 @@
     isNormalUser = true;
     home = "/home/tom";
     extraGroups = [ "wheel" "networkmanager" "docker" "vboxusers" ];
-    openssh.authorizedKeys.keys = [
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDP7ayrJK6zml2w7g5Xenk/BvrrjrcouNMeX+I2bbICrNqlN8znry5o/aesn0l2shAk0fibe85HPF+WPur+SSf1BauLDPo3rchTADi3vO/ZZUt3NSsdaE3D2x66jucv+aD9lkp+mrzvikREC0zRB6aSErGCUJ7qJU03T8Ckt7C5a3yhWMlu8znJWBS+X6UijmVGYniWtdriBtastEy4mYYv+Rc8ChasxWckVm1JQCjqnh6uqd9NiLoSh7PJe0X62jHbqCUcrfR+8AQsdDUm9kcl65193QC1HkoDGVwL8vqlDUZbevzgvezVE2tVs+hIj3765YmC2A7/1wSIL+tavw3lMVKnqulBLwdrC+meKEYxTYdLvIHDafkWpv6Oyp8jMfwm2sUgoviNwYEWhRoGaSTVp22jyT6UKBbSoYP2x22mThVh96Icj1qmCws5a4ZZ7jxiCoFxv+x27zuQGVQ1AlsdBzuwrWQ++tIa62jPwfXndTVmk4uHGhc2EDVkS9OHW/s="
-    ];
+    # openssh.authorizedKeys.keys = [
+    #   "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDP7ayrJK6zml2w7g5Xenk/BvrrjrcouNMeX+I2bbICrNqlN8znry5o/aesn0l2shAk0fibe85HPF+WPur+SSf1BauLDPo3rchTADi3vO/ZZUt3NSsdaE3D2x66jucv+aD9lkp+mrzvikREC0zRB6aSErGCUJ7qJU03T8Ckt7C5a3yhWMlu8znJWBS+X6UijmVGYniWtdriBtastEy4mYYv+Rc8ChasxWckVm1JQCjqnh6uqd9NiLoSh7PJe0X62jHbqCUcrfR+8AQsdDUm9kcl65193QC1HkoDGVwL8vqlDUZbevzgvezVE2tVs+hIj3765YmC2A7/1wSIL+tavw3lMVKnqulBLwdrC+meKEYxTYdLvIHDafkWpv6Oyp8jMfwm2sUgoviNwYEWhRoGaSTVp22jyT6UKBbSoYP2x22mThVh96Icj1qmCws5a4ZZ7jxiCoFxv+x27zuQGVQ1AlsdBzuwrWQ++tIa62jPwfXndTVmk4uHGhc2EDVkS9OHW/s="
+    # ];
   };
 
   virtualisation.docker.enable = true;
@@ -60,8 +60,24 @@
   system.stateVersion = "20.09";
 
   environment.systemPackages = with pkgs; [
+    ((vim_configurable.override {}).customize {
+      name = "vim";
+      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
+        start = [ vim-nix ];
+        opt = [];
+      };
+      vimrcConfig.customRC = ''
+        set nocompatible
+        syntax on
+        filetype plugin indent on
+        colo desert
+        set tabstop=4
+        set shiftwidth=4
+        set expandtab
+        set ai
+      '';
+    })
     wget
-    vim
     bash
     gnupg
     ripgrep
