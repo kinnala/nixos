@@ -5,6 +5,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "ntfs" ];
   # boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
   networking.hostName = "tunkki";
